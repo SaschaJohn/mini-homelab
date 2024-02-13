@@ -2,6 +2,13 @@ configs:
   cm:
     create: true
     application.resourceTrackingMethod: "annotation+label"
+  cmp:
+    create: true
+    plugins:
+      kustomize-build-with-helm:
+        generate:
+          command: [ "sh", "-c" ]
+          args: [ "kustomize build --enable-helm" ]
   params:
     server.insecure: true
 
@@ -11,33 +18,15 @@ crds:
   keep: false
 
 repoServer:
-  # https://blog.stonegarden.dev/articles/2023/09/argocd-kustomize-with-helm/
-  initContainers:
-    - name: copy-kustomize-helm
-      image: "quay.io/argoproj/argocd:v2.10.0"
-      command: [ /bin/bash ]
-      args:
-        - -c
-        - >-
-          /bin/cp -n /usr/local/bin/kustomize /var/run/argocd/kustomize &&
-          /bin/cp -n /usr/local/bin/helm /var/run/argocd/helm
-      volumeMounts:
-        - name: var-files
-          mountPath: /var/run/argocd
   extraContainers:
     - name: kustomize-build-with-helm
-      env:
-        - name: PATH
-          value: "/var/run/argocd:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
       command:
         - argocd-cmp-server
-      image: alpine/git:2.40.1
+      image: '{{ default .Values.global.image.repository .Values.repoServer.image.repository }}:{{ default (include "argo-cd.defaultTag" .) .Values.repoServer.image.tag }}'
       securityContext:
         runAsNonRoot: true
         runAsUser: 999
       volumeMounts:
-        - name: var-files
-          mountPath: /var/run/argocd
         - name: plugins
           mountPath: /home/argocd/cmp-server/plugins
         - name: cmp-kustomize-build-with-helm
@@ -48,7 +37,7 @@ repoServer:
   volumes:
     - name: cmp-kustomize-build-with-helm
       configMap:
-        name: argocd-cm-cmp-kustomize-build-with-helm
+        name: argocd-cmp-cm
     - name: cmp-tmp
       emptyDir: { }
 

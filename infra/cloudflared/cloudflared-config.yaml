@@ -7,16 +7,18 @@ warp-routing:
   enabled: true
 
 ingress:
-  - hostname: euclid.stonegarden.dev
+  - hostname: hello.euclid.stonegarden.dev
     service: hello_world
-#  - hostname: ssh.stonegarden.dev
-#    service: ssh://192.168.1.12:22
-  - hostname: "*.stonegarden.dev"
-    service: https://cilium-gateway-cilium-gateway.gateway.svc.cluster.local:443
+  - hostname: haos.stonegarden.dev
+    service: https://cilium-gateway-stonegarden.gateway.svc.cluster.local:443
     originRequest:
       originServerName: "*.stonegarden.dev"
-  - hostname: haos.stonegarden.dev
-    service: https://cilium-gateway-cilium-gateway.gateway.svc.cluster.local:443
+  - hostname: "*.euclid.stonegarden.dev"
+    service: https://cilium-gateway-euclid.gateway.svc.cluster.local:443
     originRequest:
-      originServerName: stonegarden.dev
+      originServerName: "*.euclid.stonegarden.dev"
+  - hostname: "*.stonegarden.dev"
+    service: https://cilium-gateway-cilium-stonegarden.gateway.svc.cluster.local:443
+    originRequest:
+      originServerName: "*.stonegarden.dev"
   - service: http_status:404

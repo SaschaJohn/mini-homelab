@@ -3,7 +3,6 @@ kind: Kustomization
 
 resources:
   - ns.yaml
-  - cm-kustomize-helm-plugin.yaml
   - http-route.yaml
 
 helmCharts:

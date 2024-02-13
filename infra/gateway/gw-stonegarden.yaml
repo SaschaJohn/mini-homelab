@@ -1,7 +1,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: cilium-gateway
+  name: stonegarden
   namespace: gateway
   annotations:
     cert-manager.io/issuer: cloudflare-issuer
@@ -18,7 +18,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: cloudflare-cert
+            name: cert-stonegarden
       allowedRoutes:
         namespaces:
           from: All
