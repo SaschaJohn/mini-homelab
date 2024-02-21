@@ -13,6 +13,18 @@ ingress:
     service: https://cilium-gateway-stonegarden.gateway.svc.cluster.local:443
     originRequest:
       originServerName: "*.stonegarden.dev"
+  - hostname: whoami.euclid.stonegarden.dev
+    service: https://cilium-ingress-whoami.whoami.svc.cluster.local:443
+    originRequest:
+      originServerName: whoami.euclid.stonegarden.dev
+  - hostname: whoami-dedicated.euclid.stonegarden.dev
+    service: https://cilium-ingress-whoami-dedicated.whoami.svc.cluster.local:443
+    originRequest:
+      originServerName: whoami-dedicated.euclid.stonegarden.dev
+  - hostname: whoami-shared.euclid.stonegarden.dev
+    service: https://cilium-ingress.kube-system.svc.cluster.local:443
+    originRequest:
+      originServerName: whoami-shared.euclid.stonegarden.dev
   - hostname: "*.euclid.stonegarden.dev"
     service: https://cilium-gateway-euclid.gateway.svc.cluster.local:443
     originRequest:

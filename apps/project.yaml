@@ -13,6 +13,8 @@ spec:
       server: '*'
     - namespace: 'proxmox'
       server: '*'
+    - namespace: 'whoami'
+      server: '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
