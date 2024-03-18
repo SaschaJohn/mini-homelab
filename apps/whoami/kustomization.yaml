@@ -7,7 +7,7 @@ resources:
   - ns.yaml
   - svc.yaml
   - deployment.yaml
-  - ingress.yaml
-  - ingress-shared.yaml
-  - ingress-dedicated.yaml
+#  - ingress.yaml
+#  - ingress-shared.yaml
+#  - ingress-dedicated.yaml
   - http-route.yaml

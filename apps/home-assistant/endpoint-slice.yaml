@@ -16,19 +16,3 @@ endpoints:
       - 192.168.1.27
     conditions:  # https://github.com/argoproj/argo-cd/issues/15554
       ready: true
-#---
-#apiVersion: v1
-#kind: Endpoints
-#metadata:
-#  name: home-assistant
-#  namespace: home-assistant
-#  labels:
-#    kubernetes.io/service-name: home-assistant
-#    endpoints.kubernetes.io/managed-by: cluster-admins
-#subsets:
-#  - addresses:
-#      - ip: 192.168.1.27
-#    ports:
-#      - name: http
-#        port: 8123
-#        protocol: TCP
