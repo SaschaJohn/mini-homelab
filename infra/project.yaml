@@ -11,6 +11,8 @@ spec:
     - 'https://helm.traefik.io/*'
     - 'https://helm.cilium.io/*'
   destinations:
+    - namespace: 'adguard'
+      server: '*'
     - namespace: 'argocd'
       server: '*'
     - namespace: 'cert-manager'

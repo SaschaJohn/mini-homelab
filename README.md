@@ -78,6 +78,8 @@ Add Argo CD
 kubectl kustomize --enable-helm infra/argocd | kubectl apply -f -
 ```
 
+Get Argo CD admin secret
+
 ```shell
 kubectl -n argocd get secret argocd-initial-admin-secret -ojson | jq -r ' .data.password | @base64d'
 ```
