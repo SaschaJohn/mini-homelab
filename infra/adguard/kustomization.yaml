@@ -4,5 +4,9 @@ kind: Kustomization
 resources:
   - ns.yaml
   - svc.yaml
+  - pv-conf.yaml
+  - pv-work.yaml
+  - pvc-conf.yaml
+  - pvc-work.yaml
   - deploy.yaml
   - http-route.yaml

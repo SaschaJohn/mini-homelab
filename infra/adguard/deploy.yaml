@@ -14,7 +14,7 @@ spec:
         app: adguard
     spec:
       containers:
-        - image: adguard/adguardhome
+        - image: adguard/adguardhome:v0.107.48
           imagePullPolicy: IfNotPresent
           name: adguard
           ports:
@@ -30,3 +30,15 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/adguardhome/conf
+              name: adguard-conf
+            - mountPath: /opt/adguardhome/work
+              name: adguard-work
+      volumes:
+        - name: adguard-conf
+          persistentVolumeClaim:
+            claimName: adguard-conf
+        - name: adguard-work
+          persistentVolumeClaim:
+            claimName: adguard-work
