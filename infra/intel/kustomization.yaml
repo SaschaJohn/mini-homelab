@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd?ref=v0.29.0
+  - https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd/overlays/node-feature-rules?ref=v0.29.0
+
+helmCharts:
+  - name: intel-device-plugins-operator
+    repo: https://intel.github.io/helm-charts/
+    version: 0.29.0
+    releaseName: intel-device-plugins-operator
+    includeCRDs: true
+  - name: intel-device-plugins-gpu
+    repo: https://intel.github.io/helm-charts/
+    version: 0.29.0
+    releaseName: intel-device-plugins-gpu
+    includeCRDs: true
+    valuesFile: values.yaml
