@@ -1,13 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: applications
+  name: external
   namespace: argocd
 spec:
   sourceRepos:
     - 'https://gitlab.com/vehagn/mini-homelab*'
   destinations:
     - namespace: 'argocd'
+      server: '*'
+    - namespace: 'home-assistant'
+      server: '*'
+    - namespace: 'proxmox'
       server: '*'
   clusterResourceWhitelist:
     - group: '*'

@@ -4,7 +4,6 @@ commonLabels:
   app: whoami
 
 resources:
-  - ns.yaml
   - svc.yaml
   - deployment.yaml
 #  - ingress.yaml

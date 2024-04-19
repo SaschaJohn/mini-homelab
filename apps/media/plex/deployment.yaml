@@ -1,0 +1,41 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: plex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plex
+  template:
+    spec:
+      containers:
+        - name: plex
+          image: ghcr.io/onedr0p/plex:1.40.2.8395-c67dce28e
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 200m
+              memory: 1Gi
+            limits:
+              cpu: 3000m
+              memory: 3Gi
+#              nvidia.com/gpu: "1"
+          envFrom:
+            - configMapRef:
+                name: plex-env
+          ports:
+            - name: http
+              containerPort: 32400
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: media
+              mountPath: /app/data
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: plex-config
+        - name: media
+          persistentVolumeClaim:
+            claimName: plex-media

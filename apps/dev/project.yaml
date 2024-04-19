@@ -1,13 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: applications
+  name: dev
   namespace: argocd
 spec:
   sourceRepos:
     - 'https://gitlab.com/vehagn/mini-homelab*'
   destinations:
     - namespace: 'argocd'
+      server: '*'
+    - namespace: 'whoami'
       server: '*'
   clusterResourceWhitelist:
     - group: '*'
