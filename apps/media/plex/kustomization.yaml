@@ -14,8 +14,9 @@ configMapGenerator:
 
 resources:
   - pv-plex-config.yaml
-  - pvc-plex-config.yaml
   - pv-plex-media.yaml
+  - pvc-euclid-media.yaml
+  - pvc-plex-config.yaml
   - pvc-plex-media.yaml
   - svc.yaml
   - deployment.yaml
