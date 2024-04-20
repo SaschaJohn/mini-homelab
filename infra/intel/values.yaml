@@ -1,0 +1,5 @@
+name: igpu
+
+nodeSelector:
+  gpu.intel.com/device-id.0300-46d1.present: 'true'
+#  intel.feature.node.kubernetes.io/gpu: 'true'

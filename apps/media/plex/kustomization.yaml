@@ -7,17 +7,12 @@ commonLabels:
 configMapGenerator:
   - name: plex-env
     literals:
-      - PUID="1000"
-      - PGID="1000"
-      - UMASK="002"
+#      - PUID="1000"
+#      - PGID="1000"
+#      - UMASK="002"
       - TZ="Europe/Oslo"
 
 resources:
-  - pv-plex-config.yaml
-  - pv-plex-media.yaml
-  - pvc-euclid-media.yaml
-  - pvc-plex-config.yaml
-  - pvc-plex-media.yaml
   - svc.yaml
   - deployment.yaml
 #  - ingress.yaml

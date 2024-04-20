@@ -32,20 +32,23 @@ spec:
               mountPath: /config
             - name: euclid-media
               mountPath: /app/euclid/media
-            - name: media
+            - name: nas-media
               mountPath: /app/data
             - mountPath: /dev/dri
               name: quicksync
       volumes:
         - name: config
-          persistentVolumeClaim:
-            claimName: plex-config
+          nfs:
+            server: 192.168.1.42
+            path: /rpool/data/plex-conf
         - name: euclid-media
-          persistentVolumeClaim:
-            claimName: euclid-media
-        - name: media
-          persistentVolumeClaim:
-            claimName: plex-media
+          nfs:
+            server: 192.168.1.42
+            path: /rpool/data/media
+        - name: nas-media
+          nfs:
+            server: 192.168.1.55
+            path: /mnt/pool-0/media
         - name: quicksync
           hostPath:
             path: /dev/dri
