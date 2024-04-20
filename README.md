@@ -34,13 +34,20 @@ Get CF API token and create secret
 
 ```shell
 CF_API_TOKEN=<CF_API_TOKEN>
-kubectl -n gateway create secret generic cloudflare-api-token --from-literal=api-token=${CF_API_TOKEN} --dry-run=client -oyaml > cf-api-secret.yaml 
+kubectl -n cert-manager create secret generic cloudflare-api-token --from-literal=api-token=${CF_API_TOKEN} --dry-run=client -oyaml > cluster-issuer-cf-api-secret.yaml 
+kubectl -n gateway create secret generic cloudflare-api-token --from-literal=api-token=${CF_API_TOKEN} --dry-run=client -oyaml > gateway-cf-api-secret.yaml 
 ```
 
-Seal secret
+Seal secret for Gateway
 
 ```shell
-kubeseal -o yaml < cf-api-secret.yaml > infra/gateway/cloudflare-api-token.yaml
+kubeseal -o yaml < cluster-issuer-cf-api-secret.yaml > infra/cert-manager/cloudflare-api-token.yaml
+```
+
+Seal secret for Gateway
+
+```shell
+kubeseal -o yaml < gateway-cf-api-secret.yaml > infra/gateway/cloudflare-api-token.yaml
 ```
 
 Gateway

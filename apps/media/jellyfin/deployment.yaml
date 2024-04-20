@@ -1,18 +1,18 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: plex
-  namespace: plex
+  name: jellyfin
+  namespace: jellyfin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: plex
+      app: jellyfin
   template:
     spec:
       containers:
-        - name: plex
-          image: ghcr.io/onedr0p/plex:1.40.2.8395-c67dce28e
+        - name: jellyfin
+          image: jellyfin/jellyfin:2024041505
           imagePullPolicy: IfNotPresent
           resources:
             requests:
@@ -27,10 +27,10 @@ spec:
               value: Europe/Oslo
           #envFrom:
           #  - configMapRef:
-          #      name: plex-env
+          #      name: jellyfin-env
           ports:
             - name: http
-              containerPort: 32400
+              containerPort: 8096
           volumeMounts:
             - name: config
               mountPath: /config
@@ -40,9 +40,8 @@ spec:
               mountPath: /nas/media
       volumes:
         - name: config
-          nfs:
-            server: 192.168.1.42
-            path: /rpool/data/plex-conf
+          persistentVolumeClaim:
+            claimName: jellyfin-config
         - name: euclid-media
           nfs:
             server: 192.168.1.42
