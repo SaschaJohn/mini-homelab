@@ -4,11 +4,18 @@ metadata:
   name: adguard-conf
 spec:
   capacity:
-    storage: 1Gi
+    storage: 32Mi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  nfs:
-    server: 192.168.1.42
-    path: /rpool/data/adguard-conf
+  local:
+    path: /mnt/config/etc/adguard/conf
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - k8s-work-01
