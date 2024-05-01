@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - svc.yaml
   - endpoint-slice.yaml
-  - tls-route.yaml
+#  - tls-route.yaml
