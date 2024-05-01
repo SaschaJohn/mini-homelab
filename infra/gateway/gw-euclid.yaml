@@ -22,3 +22,12 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+    - protocol: TLS
+      port: 443
+      name: proxmox-tls-passthrough
+      hostname: "proxmox.euclid.stonegarden.dev"
+      tls:
+        mode: Passthrough
+      allowedRoutes:
+        namespaces:
+          from: All
