@@ -1,0 +1,28 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: test
+  namespace: gateway
+spec:
+  gatewayClassName: cilium
+  listeners:
+    - protocol: HTTPS
+      port: 443
+      name: https-gateway
+      hostname: "*.example.com"
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: test-cert
+      allowedRoutes:
+        namespaces:
+          from: All
+    - protocol: TLS
+      port: 443
+      name: proxmox-tls-passthrough
+      hostname: "proxmox.example.com"
+      tls:
+        mode: Passthrough
+      allowedRoutes:
+        namespaces:
+          from: All

@@ -10,3 +10,4 @@ resources:
   - gw-euclid.yaml
 #  - gw-proxmox.yaml
   - gw-stonegarden.yaml
+  - gw-test.yaml
