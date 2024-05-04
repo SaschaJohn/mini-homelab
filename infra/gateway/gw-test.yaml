@@ -3,8 +3,6 @@ kind: Gateway
 metadata:
   name: test
   namespace: gateway
-  annotations:
-    cert-manager.io/issuer: cloudflare-issuer
 spec:
   gatewayClassName: cilium
   listeners:
@@ -16,15 +14,6 @@ spec:
         certificateRefs:
           - kind: Secret
             name: test-cert
-      allowedRoutes:
-        namespaces:
-          from: All
-    - protocol: TLS
-      port: 443
-      name: proxmox-tls-passthrough
-      hostname: "proxmox.example.com"
-      tls:
-        mode: Passthrough
       allowedRoutes:
         namespaces:
           from: All
