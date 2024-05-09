@@ -10,3 +10,4 @@ resources:
 #  - ingress-shared.yaml
 #  - ingress-dedicated.yaml
   - http-route.yaml
+  - http-route-test.yaml
