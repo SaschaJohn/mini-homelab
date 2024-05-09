@@ -11,7 +11,7 @@ spec:
     - protocol: HTTPS
       port: 443
       name: https-gateway
-      hostname: "*.euclid.stonegarden.dev"
+      hostname: "*.stonegarden.dev"
       tls:
         certificateRefs:
           - kind: Secret
