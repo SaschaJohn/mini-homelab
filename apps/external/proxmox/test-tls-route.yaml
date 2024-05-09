@@ -8,7 +8,7 @@ spec:
     - name: test
       namespace: gateway
   hostnames:
-    - "proxmox.euclid.stonegarden.dev"
+    - "proxmox-test.euclid.stonegarden.dev"
   rules:
     - backendRefs:
         - name: proxmox-euclid
