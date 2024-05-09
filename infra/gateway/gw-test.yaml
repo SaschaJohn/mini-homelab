@@ -3,15 +3,15 @@ kind: Gateway
 metadata:
   name: test
   namespace: gateway
-  annotations:
-    cert-manager.io/issuer: cloudflare-issuer
+#  annotations:
+#    cert-manager.io/issuer: cloudflare-issuer
 spec:
   gatewayClassName: cilium
   listeners:
     - protocol: HTTPS
       port: 443
       name: https-gateway
-      hostname: "*.stonegarden.dev"
+      hostname: "*.euclid.stonegarden.dev"
       tls:
         certificateRefs:
           - kind: Secret
