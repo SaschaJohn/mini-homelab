@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: jellyfin
-          image: jellyfin/jellyfin:2024041505
+          image: ghcr.io/jellyfin/jellyfin:10.9.0
           imagePullPolicy: IfNotPresent
           resources:
             requests:
