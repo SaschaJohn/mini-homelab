@@ -7,15 +7,12 @@ configMapGenerator:
   - name: jellyfin-env
     namespace: jellyfin
     literals:
-      - PUID="1000"
-      - PGID="1000"
-      - UMASK="002"
       - TZ="Europe/Oslo"
 
 resources:
   - svc.yaml
   - deployment.yaml
-#  - ingress.yaml
+  - ingress.yaml
   - http-route.yaml
   - pv-jellyfin-config.yaml
   - pvc-jellyfin-config.yaml

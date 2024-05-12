@@ -22,31 +22,21 @@ spec:
               cpu: 3000m
               memory: 4Gi
               gpu.intel.com/i915: 1000m
-          env:
-            - name: TZ
-              value: Europe/Oslo
-          #envFrom:
-          #  - configMapRef:
-          #      name: plex-env
+          envFrom:
+            - configMapRef:
+                name: plex-env
           ports:
             - name: http
               containerPort: 32400
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: euclid-media
-              mountPath: /euclid/media
             - name: nas-media
               mountPath: /nas/media
       volumes:
         - name: config
-          nfs:
-            server: 192.168.1.42
-            path: /rpool/data/plex-conf
-        - name: euclid-media
-          nfs:
-            server: 192.168.1.42
-            path: /rpool/data/media
+          persistentVolumeClaim:
+            claimName: plex-config
         - name: nas-media
           nfs:
             server: 192.168.1.55
