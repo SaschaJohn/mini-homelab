@@ -5,6 +5,7 @@ commonLabels:
 
 configMapGenerator:
   - name: jellyfin-env
+    namespace: jellyfin
     literals:
       - PUID="1000"
       - PGID="1000"
