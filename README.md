@@ -38,7 +38,7 @@ kubectl -n cert-manager create secret generic cloudflare-api-token --from-litera
 kubectl -n gateway create secret generic cloudflare-api-token --from-literal=api-token=${CF_API_TOKEN} --dry-run=client -oyaml > gateway-cf-api-secret.yaml 
 ```
 
-Seal secret for Gateway
+Seal secret for Cluster Issuer
 
 ```shell
 kubeseal -o yaml < cluster-issuer-cf-api-secret.yaml > infra/cert-manager/cloudflare-api-token.yaml
@@ -67,7 +67,7 @@ TUNNEL_CREDENTIALS=<CREDENTIALS_FILE>
 kubectl -n cloudflared create secret generic tunnel-credentials --from-literal=credentials.json=$(cat ${TUNNEL_CREDENTIALS}) --dry-run=client -oyaml > tunnel-secret.yaml 
 ```
 
-Seal secret
+Seal CF tunnel secret
 
 ```shell
 kubeseal -o yaml < tunnel-secret.yaml > infra/cloudflared/tunnel-credentials.yaml
@@ -95,4 +95,18 @@ Apply app-of-apps
 
 ```shell
 kubectl apply -k sets
+```
+
+---
+
+```shell
+kubectl label node k8s-work-01 intel.feature.node.kubernetes.io/gpu=true
+```
+
+```shell
+kubectl get node -o 'jsonpath={.items[*].metadata.labels}' | jq
+```
+
+```shell
+kubectl get node -o 'jsonpath={.items[*].status.capacity}' | jq
 ```

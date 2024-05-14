@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: plex
-          image: ghcr.io/onedr0p/plex:1.40.2.8395-c67dce28e
+          image: lscr.io/linuxserver/plex:1.40.2
           imagePullPolicy: IfNotPresent
           resources:
             requests:

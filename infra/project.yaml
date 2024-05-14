@@ -29,6 +29,8 @@ spec:
       server: '*'
     - namespace: 'kube-system'
       server: '*'
+    - namespace: 'inteldeviceplugins-system'
+      server: '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'

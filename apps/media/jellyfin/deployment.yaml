@@ -31,18 +31,12 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: euclid-media
-              mountPath: /euclid/media
             - name: nas-media
               mountPath: /nas/media
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: jellyfin-config
-        - name: euclid-media
-          nfs:
-            server: 192.168.1.42
-            path: /rpool/data/media
         - name: nas-media
           nfs:
             server: 192.168.1.55
