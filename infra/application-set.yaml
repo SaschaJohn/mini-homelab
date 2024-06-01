@@ -17,8 +17,6 @@ spec:
       name: '{{ path.basename }}'
       labels:
         dev.stonegarden: infrastructure
-      finalizers:
-        - resources-finalizer.argocd.argoproj.io
     spec:
       project: infrastructure
       source:

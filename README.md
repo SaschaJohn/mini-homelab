@@ -15,19 +15,19 @@ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/downloa
 Add Cilium
 
 ```shell
-kubectl kustomize --enable-helm infra/cilium | kubectl apply -f -
+kubectl kustomize --enable-helm infra/core/cilium | kubectl apply -f -
 ```
 
 Add Sealed Secrets
 
 ```shell
-kubectl kustomize --enable-helm infra/sealed-secrets | kubectl apply -f -
+kubectl kustomize --enable-helm infra/controllers/sealed-secrets | kubectl apply -f -
 ```
 
 Add Cert-manager
 
 ```shell
-kubectl kustomize --enable-helm infra/cert-manager | kubectl apply -f -
+kubectl kustomize --enable-helm infra/controllers/cert-manager | kubectl apply -f -
 ```
 
 Get CF API token and create secret
@@ -41,19 +41,19 @@ kubectl -n gateway create secret generic cloudflare-api-token --from-literal=api
 Seal secret for Cluster Issuer
 
 ```shell
-kubeseal -o yaml < cluster-issuer-cf-api-secret.yaml > infra/cert-manager/cloudflare-api-token.yaml
+kubeseal -o yaml < cluster-issuer-cf-api-secret.yaml > infra/controllers/cert-manager/cloudflare-api-token.yaml
 ```
 
 Seal secret for Gateway
 
 ```shell
-kubeseal -o yaml < gateway-cf-api-secret.yaml > infra/gateway/cloudflare-api-token.yaml
+kubeseal -o yaml < gateway-cf-api-secret.yaml > infra/network/gateway/cloudflare-api-token.yaml
 ```
 
 Gateway
 
 ```shell
-kubectl kustomize --enable-helm infra/gateway | kubectl apply -f -
+kubectl kustomize --enable-helm infra/network/gateway | kubectl apply -f -
 ```
 
 Cloudflare tunnel
@@ -70,11 +70,11 @@ kubectl -n cloudflared create secret generic tunnel-credentials --from-literal=c
 Seal CF tunnel secret
 
 ```shell
-kubeseal -o yaml < tunnel-secret.yaml > infra/cloudflared/tunnel-credentials.yaml
+kubeseal -o yaml < tunnel-secret.yaml > infra/network/cloudflared/tunnel-credentials.yaml
 ```
 
 ```shell
-kubectl apply -k infra/cloudflared
+kubectl apply -k infra/network/cloudflared
 ```
 
 Get Tunnel ID (not Connector ID) and add DNS CNAME record with `<id>.cfargotunnel.com`
@@ -82,7 +82,7 @@ Get Tunnel ID (not Connector ID) and add DNS CNAME record with `<id>.cfargotunne
 Add Argo CD
 
 ```shell
-kubectl kustomize --enable-helm infra/argocd | kubectl apply -f -
+kubectl kustomize --enable-helm infra/core/argocd | kubectl apply -f -
 ```
 
 Get Argo CD admin secret

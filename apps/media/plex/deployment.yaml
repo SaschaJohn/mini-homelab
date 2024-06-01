@@ -17,14 +17,16 @@ spec:
         fsGroup: 65534
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [ 44, 104 ]
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: plex
           image: ghcr.io/onedr0p/plex:1.40.2.8395-c67dce28e
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
-            capabilities: { drop: [ "ALL" ] }
+            capabilities:
+              drop: [ "ALL" ]
           resources:
             requests:
               cpu: 500m
@@ -32,7 +34,7 @@ spec:
             limits:
               cpu: 6000m
               memory: 6Gi
-              gpu.intel.com/i915: 100m
+              gpu.intel.com/i915: 1000m
           envFrom:
             - configMapRef:
                 name: plex-env
@@ -46,6 +48,8 @@ spec:
               mountPath: /nas/media
             - name: transcode
               mountPath: /transcode
+            - name: tmp
+              mountPath: /tmp
       volumes:
         - name: config
           hostPath:
@@ -55,4 +59,6 @@ spec:
             server: 192.168.1.55
             path: /mnt/pool-0/media
         - name: transcode
+          emptyDir: { }
+        - name: tmp
           emptyDir: { }

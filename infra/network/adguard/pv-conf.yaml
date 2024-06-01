@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: adguard-work
+  name: adguard-conf
 spec:
   capacity:
-    storage: 1Gi
+    storage: 32Mi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   local:
-    path: /mnt/config/etc/adguard/work
+    path: /mnt/config/etc/adguard/conf
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -18,4 +18,4 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - k8s-work-01
+                - k8s-ctrl-01

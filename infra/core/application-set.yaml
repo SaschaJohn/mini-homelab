@@ -1,24 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: applications
+  name: core
   namespace: argocd
   labels:
-    dev.stonegarden: applications
+    dev.stonegarden: core
 spec:
   generators:
     - git:
         repoURL: https://gitlab.com/vehagn/mini-homelab.git
         revision: HEAD
         directories:
-          - path: apps/*
+          - path: infra/core/*
   template:
     metadata:
       name: '{{ path.basename }}'
       labels:
-        dev.stonegarden: applications
+        dev.stonegarden: core
     spec:
-      project: applications
+      project: core
       source:
         plugin:
           name: kustomize-build-with-helm

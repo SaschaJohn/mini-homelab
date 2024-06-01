@@ -1,12 +1,7 @@
 installCRDs: true
 
-#extraArgs:
-#  - "--feature-gates=ExperimentalGatewayAPISupport=true"
-
-#podDnsConfig:
-#  nameservers:
-#    - "1.1.1.1"
-#    - "8.8.8.8"
+extraArgs:
+  - "--feature-gates=ExperimentalGatewayAPISupport=true"
 
 config:
   apiVersion: controller.config.cert-manager.io/v1alpha1

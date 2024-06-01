@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: dev
+  name: controllers
   namespace: argocd
 spec:
   sourceRepos:
@@ -9,7 +9,13 @@ spec:
   destinations:
     - namespace: 'argocd'
       server: '*'
-    - namespace: 'whoami'
+    - namespace: 'cert-manager'
+      server: '*'
+    - namespace: 'node-feature-discovery'
+      server: '*'
+    - namespace: 'intel-device-plugins'
+      server: '*'
+    - namespace: 'kube-system'
       server: '*'
   clusterResourceWhitelist:
     - group: '*'
