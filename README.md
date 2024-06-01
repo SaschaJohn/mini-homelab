@@ -97,16 +97,8 @@ Apply app-of-apps
 kubectl apply -k sets
 ```
 
----
+Remove taint on master node to allow scheduling of all deployments
 
 ```shell
-kubectl label node k8s-work-01 intel.feature.node.kubernetes.io/gpu=true
-```
-
-```shell
-kubectl get node -o 'jsonpath={.items[*].metadata.labels}' | jq
-```
-
-```shell
-kubectl get node -o 'jsonpath={.items[*].status.capacity}' | jq
+kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 ```

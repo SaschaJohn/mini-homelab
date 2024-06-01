@@ -4,13 +4,12 @@ metadata:
   name: jellyfin-config
 spec:
   capacity:
-    storage: 12Gi
+    storage: 8Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
   local:
-    path: /mnt/config/etc/jellyfin
+    path: /etc/jellyfin
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -18,4 +17,4 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - k8s-work-01
+                - k8s-ctrl-01

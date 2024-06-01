@@ -1,5 +1,5 @@
 cluster:
-  name: euclid
+  name: abel
   id: 1
 
 k8sServiceHost: "192.168.1.100"
@@ -9,7 +9,7 @@ kubeProxyReplacement: true
 
 operator:
 #  # Can't have more replicas than nodes
-#  replicas: 1
+  replicas: 1
   rollOutPods: true
   resources:
     limits:

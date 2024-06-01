@@ -12,7 +12,6 @@ configMapGenerator:
 resources:
   - svc.yaml
   - deployment.yaml
-  - ingress.yaml
-  - http-route.yaml
+#  - ingress.yaml
   - pv-jellyfin-config.yaml
   - pvc-jellyfin-config.yaml

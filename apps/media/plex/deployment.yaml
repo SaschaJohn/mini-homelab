@@ -10,18 +10,29 @@ spec:
       app: plex
   template:
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [ 44, 104 ]
+        seccompProfile: { type: RuntimeDefault }
       containers:
         - name: plex
-          image: lscr.io/linuxserver/plex:1.40.2
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/onedr0p/plex:1.40.2.8395-c67dce28e
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ "ALL" ] }
           resources:
             requests:
               cpu: 500m
               memory: 2Gi
             limits:
-              cpu: 3000m
-              memory: 4Gi
-              gpu.intel.com/i915: 1000m
+              cpu: 6000m
+              memory: 6Gi
+              gpu.intel.com/i915: 100m
           envFrom:
             - configMapRef:
                 name: plex-env
@@ -33,11 +44,15 @@ spec:
               mountPath: /config
             - name: nas-media
               mountPath: /nas/media
+            - name: transcode
+              mountPath: /transcode
       volumes:
         - name: config
-          persistentVolumeClaim:
-            claimName: plex-config
+          hostPath:
+            path: /etc/plex
         - name: nas-media
           nfs:
             server: 192.168.1.55
             path: /mnt/pool-0/media
+        - name: transcode
+          emptyDir: { }
