@@ -102,3 +102,81 @@ Remove taint on master node to allow scheduling of all deployments
 ```shell
 kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 ```
+
+## Proxmox CCM
+
+> The basic definitions:
+> * kubernetes region is a Proxmox cluster clusters[].region
+> * kubernetes zone is a hypervisor host machine name
+
+```shell
+kubectl label no k8s-ctrl-01 topology.kubernetes.io/region=homelab
+kubectl label no k8s-ctrl-01 topology.kubernetes.io/zone=abel
+```
+
+https://github.com/sergelogvinov/proxmox-cloud-controller-manager
+
+https://github.com/sergelogvinov/proxmox-cloud-controller-manager/issues/63
+https://github.com/sergelogvinov/proxmox-cloud-controller-manager/issues/111
+
+Create role CCM
+Create user and grant permissions
+
+```shell
+pveum role add CCM -privs "VM.Audit"
+pveum user add kubernetes@pve
+pveum aclmod / -user kubernetes@pve -role CCM
+pveum user token add kubernetes@pve ccm -privsep 0
+```
+
+```yaml
+# config.yaml
+clusters:
+  - url: https://cluster-api-1.exmple.com:8006/api2/json
+    insecure: false
+    token_id: "kubernetes@pve!ccm"
+    token_secret: "secret"
+    region: cluster-1
+```
+
+```shell
+kubeseal -o yaml < pve-ccm-secret.yaml > infra/controllers/proxmox-ccm/proxmox-ccm-secret.yaml
+```
+
+## Proxmox CSI
+
+https://github.com/sergelogvinov/proxmox-csi-plugin
+
+```shell
+pveum role add CSI -privs "VM.Audit VM.Config.Disk Datastore.Allocate Datastore.AllocateSpace Datastore.Audit"
+pveum user add kubernetes-csi@pve
+pveum aclmod / -user kubernetes-csi@pve -role CSI
+pveum user token add kubernetes-csi@pve csi -privsep 0
+```
+
+```shell
+# config.yaml
+clusters:
+  - url: https://cluster-api-1.exmple.com:8006/api2/json
+    insecure: false
+    token_id: "kubernetes-csi@pve!csi"
+    token_secret: "secret"
+    region: Region-1
+  - url: https://cluster-api-2.exmple.com:8006/api2/json
+    insecure: false
+    token_id: "kubernetes-csi@pve!csi"
+    token_secret: "secret"
+    region: Region-2
+```
+
+```shell
+kubectl -n csi-proxmox create secret generic proxmox-csi-plugin --from-file=config.yaml --dry-run=client -oyaml > pve-csi-secret.yaml
+```
+
+```shell
+kubeseal -o yaml < pve-csi-secret.yaml > infra/storage/proxmox-csi/proxmox-csi-secret.yaml
+```
+
+```shell
+kubectl get csistoragecapacities -ocustom-columns=CLASS:.storageClassName,AVAIL:.capacity,ZONE:.nodeTopology.matchLabels -A
+```
