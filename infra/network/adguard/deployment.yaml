@@ -18,6 +18,15 @@ spec:
       labels:
         app: adguard
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - k8s-ctrl-02
       containers:
         - name: unbound
           image: mvance/unbound:1.19.0

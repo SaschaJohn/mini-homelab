@@ -9,7 +9,7 @@ kubeProxyReplacement: true
 
 operator:
 #  # Can't have more replicas than nodes
-  replicas: 1
+  replicas: 2
   rollOutPods: true
   resources:
     limits:

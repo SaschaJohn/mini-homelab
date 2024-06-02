@@ -14,5 +14,4 @@ resources:
   - deployment.yaml
 #  - ingress.yaml
 #  - http-route.yaml
-  - pv-plex-config.yaml
   - pvc-plex-config.yaml

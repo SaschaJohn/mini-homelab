@@ -4,9 +4,9 @@ metadata:
   name: adguard-work
   namespace: adguard
 spec:
+  storageClassName: proxmox-data
   accessModes:
     - ReadWriteOnce
-  volumeName: adguard-work
   resources:
     requests:
       storage: 1Gi

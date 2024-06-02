@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - https://raw.githubusercontent.com/sergelogvinov/proxmox-csi-plugin/main/docs/deploy/proxmox-csi-plugin.yml
+  - https://raw.githubusercontent.com/sergelogvinov/proxmox-csi-plugin/v0.6.1/docs/deploy/proxmox-csi-plugin-release.yml
   - proxmox-csi-secret.yaml
   - sc.yaml
 
@@ -10,7 +10,7 @@ resources:
 #  - name: proxmox-csi-plugin
 #    repo: oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin
 #    version: 0.6.1
-#    releaseName: proxmox-csi-lugin
+#    releaseName: proxmox-csi-plugin
 #    includeCRDs: true
 #    namespace: csi-proxmox
 #    valuesInline:

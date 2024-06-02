@@ -12,6 +12,12 @@ Add Gateway API CRDs
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/experimental-install.yaml
 ```
 
+Remove taint on control-plane nodes to allow scheduling of all deployments (optional)
+
+```shell
+kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+```
+
 Add Cilium
 
 ```shell
@@ -22,12 +28,6 @@ Add Sealed Secrets
 
 ```shell
 kubectl kustomize --enable-helm infra/controllers/sealed-secrets | kubectl apply -f -
-```
-
-Add Cert-manager
-
-```shell
-kubectl kustomize --enable-helm infra/controllers/cert-manager | kubectl apply -f -
 ```
 
 Get CF API token and create secret
@@ -42,6 +42,12 @@ Seal secret for Cluster Issuer
 
 ```shell
 kubeseal -o yaml < cluster-issuer-cf-api-secret.yaml > infra/controllers/cert-manager/cloudflare-api-token.yaml
+```
+
+Add Cert-manager
+
+```shell
+kubectl kustomize --enable-helm infra/controllers/cert-manager | kubectl apply -f -
 ```
 
 Seal secret for Gateway
@@ -97,13 +103,32 @@ Apply app-of-apps
 kubectl apply -k sets
 ```
 
-Remove taint on master node to allow scheduling of all deployments
+## Proxmox CCM
+
+https://kubernetes.io/docs/tasks/administer-cluster/running-cloud-controller/
 
 ```shell
-kubectl taint nodes --all node-role.kubernetes.io/control-plane-
-```
+veh@k8s-ctrl-01:~$ sudo vim /var/lib/kubelet/config.yaml
+veh@k8s-ctrl-01:/var/lib/kubelet$ cat kubeadm-flags.env  
+veh@k8s-ctrl-01:~$ sudo systemctl restart kubelet
+veh@k8s-ctrl-01:/var/lib/kubelet$ cat kubeadm-flags.env 
+KUBELET_KUBEADM_ARGS="--container-runtime-endpoint=unix:///var/run/containerd/containerd.sock --pod-infra-container-image=registry.k8s.io/pause:3.9"
+KUBELET_EXTRA_ARGS="--cloud-provider=external"
 
-## Proxmox CCM
+
+veh@k8s-ctrl-01:/etc/sysconfig$ cat kubelet 
+KUBELET_EXTRA_ARGS=
+veh@k8s-ctrl-01:/etc/sysconfig$ cat kubelet 
+KUBELET_EXTRA_ARGS="--node-ip=192.168.1.100 --cloud-provider=external"
+
+veh@k8s-ctrl-01:/etc/default$ cat kubelet
+KUBELET_EXTRA_ARGS="--node-ip=192.168.1.100 --cloud-provider=external"
+
+
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet.service
+
+```
 
 > The basic definitions:
 > * kubernetes region is a Proxmox cluster clusters[].region
@@ -113,6 +138,11 @@ kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 kubectl label no k8s-ctrl-01 topology.kubernetes.io/region=homelab
 kubectl label no k8s-ctrl-01 topology.kubernetes.io/zone=abel
 ```
+```shell
+kubectl label no k8s-ctrl-02 topology.kubernetes.io/region=homelab
+kubectl label no k8s-ctrl-02 topology.kubernetes.io/zone=euclid
+```
+
 
 https://github.com/sergelogvinov/proxmox-cloud-controller-manager
 
@@ -143,9 +173,16 @@ clusters:
 kubeseal -o yaml < pve-ccm-secret.yaml > infra/controllers/proxmox-ccm/proxmox-ccm-secret.yaml
 ```
 
+Install Proxmox CCM
+
+```shell
+kubectl apply -k infra/controllers/proxmox-ccm
+```
+
 ## Proxmox CSI
 
 https://github.com/sergelogvinov/proxmox-csi-plugin
+https://github.com/sergelogvinov/proxmox-csi-plugin/issues/157
 
 ```shell
 pveum role add CSI -privs "VM.Audit VM.Config.Disk Datastore.Allocate Datastore.AllocateSpace Datastore.Audit"
@@ -178,5 +215,12 @@ kubeseal -o yaml < pve-csi-secret.yaml > infra/storage/proxmox-csi/proxmox-csi-s
 ```
 
 ```shell
+kubectl apply -k infra/storage/proxmox-csi
+```
+
+```shell
 kubectl get csistoragecapacities -ocustom-columns=CLASS:.storageClassName,AVAIL:.capacity,ZONE:.nodeTopology.matchLabels -A
 ```
+
+* Create cluster in Proxmox (one node is fine?)
+* Manually label node (instead of Proxmox CCM)

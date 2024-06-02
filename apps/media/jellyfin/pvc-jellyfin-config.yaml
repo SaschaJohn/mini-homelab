@@ -4,7 +4,7 @@ metadata:
   name: jellyfin-config
   namespace: jellyfin
 spec:
-  volumeName: jellyfin-config
+  storageClassName: proxmox-data
   accessModes:
     - ReadWriteOnce
   resources:

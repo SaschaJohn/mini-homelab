@@ -52,8 +52,8 @@ spec:
               mountPath: /tmp
       volumes:
         - name: config
-          hostPath:
-            path: /etc/plex
+          persistentVolumeClaim:
+            claimName: plex-config
         - name: nas-media
           nfs:
             server: 192.168.1.55
