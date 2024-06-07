@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test
+  namespace: pve-csi
+spec:
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+  nodeSelector:
+    kubernetes.io/hostname: k8s-ctrl-01
+  containers:
+    - name: alpine
+      image: alpine
+      command: ["sleep","1d"]
+      volumeMounts:
+        - name: pvc
+          mountPath: /mnt
+  terminationGracePeriodSeconds: 1
+  volumes:
+    - name: pvc
+      ephemeral:
+        volumeClaimTemplate:
+          metadata:
+            labels:
+              type: pvc-volume
+          spec:
+            accessModes: [ "ReadWriteOnce" ]
+            storageClassName: proxmox-csi
+            resources:
+              requests:
+                storage: 2Gi
