@@ -11,5 +11,5 @@ parameters:
 mountOptions:
   - noatime
 provisioner: csi.proxmox.sinextra.dev
-reclaimPolicy: Delete
+reclaimPolicy: Retain
 volumeBindingMode: WaitForFirstConsumer

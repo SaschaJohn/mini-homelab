@@ -103,6 +103,20 @@ Apply app-of-apps
 kubectl apply -k sets
 ```
 
+## Intel Device Plugin
+
+```shell
+kubectl kustomize --enable-helm infra/controllers/node-feature-discovery | kubectl apply -f -
+```
+
+```shell
+kubectl kustomize --enable-helm infra/controllers/intel-device-plugins | kubectl apply -f -
+```
+
+```shell
+kubectl get node -o 'jsonpath={.items[*].status.allocatable}' | jq 
+```
+
 ## Proxmox CCM
 
 https://kubernetes.io/docs/tasks/administer-cluster/running-cloud-controller/
@@ -127,7 +141,6 @@ KUBELET_EXTRA_ARGS="--node-ip=192.168.1.100 --cloud-provider=external"
 
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet.service
-
 ```
 
 > The basic definitions:
@@ -142,7 +155,6 @@ kubectl label no k8s-ctrl-01 topology.kubernetes.io/zone=abel
 kubectl label no k8s-ctrl-02 topology.kubernetes.io/region=homelab
 kubectl label no k8s-ctrl-02 topology.kubernetes.io/zone=euclid
 ```
-
 
 https://github.com/sergelogvinov/proxmox-cloud-controller-manager
 
@@ -224,3 +236,9 @@ kubectl get csistoragecapacities -ocustom-columns=CLASS:.storageClassName,AVAIL:
 
 * Create cluster in Proxmox (one node is fine?)
 * Manually label node (instead of Proxmox CCM)
+
+## Plex
+
+```shell
+kubectl apply -k apps/media/plex
+```

@@ -10,7 +10,9 @@ configMapGenerator:
       - TZ="Europe/Oslo"
 
 resources:
+  - ns.yaml
   - svc.yaml
   - deployment.yaml
-#  - ingress.yaml
-  - pvc-jellyfin-config.yaml
+  - ingress.yaml
+  - pv-jellyfin-config.yaml
+  - pvc-config.yaml

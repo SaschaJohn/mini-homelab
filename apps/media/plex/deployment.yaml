@@ -21,7 +21,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: plex
-          image: ghcr.io/onedr0p/plex:1.40.2.8395-c67dce28e
+          image: ghcr.io/onedr0p/plex:1.40.3.8555-fef15d30c
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -44,8 +44,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: nas-media
-              mountPath: /nas/media
+            - name: cantor-data
+              mountPath: /mnt/cantor
             - name: transcode
               mountPath: /transcode
             - name: tmp
@@ -54,10 +54,10 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: plex-config
-        - name: nas-media
+        - name: cantor-data
           nfs:
             server: 192.168.1.55
-            path: /mnt/pool-0/media
+            path: /mnt/pool-0/data
         - name: transcode
           emptyDir: { }
         - name: tmp

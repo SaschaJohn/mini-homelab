@@ -4,9 +4,10 @@ metadata:
   name: plex-config
   namespace: plex
 spec:
-  storageClassName: proxmox-data
+  storageClassName: proxmox-csi
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 12Gi
+  volumeName: plex-config
