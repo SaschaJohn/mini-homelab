@@ -13,8 +13,6 @@ spec:
       labels:
         app: pv-deploy
     spec:
-      nodeSelector:
-        topology.kubernetes.io/zone: euclid
       containers:
         - name: alpine
           image: alpine

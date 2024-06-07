@@ -9,3 +9,7 @@ spec:
     storage: 700Mi
   accessModes:
     - ReadWriteOnce
+  iscsi:
+    iqn:
+    lun:
+    targetPortal:

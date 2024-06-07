@@ -13,8 +13,6 @@ spec:
       labels:
         app: stateful-pv
     spec:
-      nodeSelector:
-        topology.kubernetes.io/zone: abel
       containers:
         - name: alpine
           image: alpine
