@@ -6,5 +6,7 @@ commonLabels:
 
 resources:
 #  - pod.yaml
+#  - pv.yaml
+  - pvc.yaml
   - deployment.yaml
   - stateful-set.yaml

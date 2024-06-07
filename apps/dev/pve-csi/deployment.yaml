@@ -22,7 +22,12 @@ spec:
           volumeMounts:
             - name: deploy
               mountPath: /mnt
+            - name: pvc
+              mountPath: /tmp
       volumes:
+        - name: pvc
+          persistentVolumeClaim:
+            claimName: pvc
         - name: deploy
           ephemeral:
             volumeClaimTemplate:
