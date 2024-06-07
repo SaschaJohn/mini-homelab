@@ -6,6 +6,12 @@ resources:
   - proxmox-csi-secret.yaml
   - sc.yaml
 
+images:
+  - name: ghcr.io/sergelogvinov/proxmox-csi-node
+    newTag: edge
+  - name: ghcr.io/sergelogvinov/proxmox-csi-controller
+    newTag: edge
+
 #helmCharts:
 #  - name: proxmox-csi-plugin
 #    repo: oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin
