@@ -7,7 +7,7 @@ spec:
   project: app-of-apps
   source:
     path: infra
-    repoURL: https://gitlab.com/vehagn/mini-homelab.git
+    repoURL: https://github.com/SaschaJohn/mini-homelab.git
     targetRevision: HEAD
   destination:
     namespace: argocd

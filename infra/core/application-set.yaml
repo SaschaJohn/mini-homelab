@@ -8,7 +8,7 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: https://gitlab.com/vehagn/mini-homelab.git
+        repoURL: https://github.com/SaschaJohn/mini-homelab.git
         revision: HEAD
         directories:
           - path: infra/core/*
@@ -22,7 +22,7 @@ spec:
       source:
         plugin:
           name: kustomize-build-with-helm
-        repoURL: https://gitlab.com/vehagn/mini-homelab.git
+        repoURL: https://github.com/SaschaJohn/mini-homelab.git
         targetRevision: HEAD
         path: '{{ path }}'
       destination:

@@ -3,12 +3,11 @@ kind: Kustomization
 
 resources:
   - ns.yaml
-  - http-route.yaml
 
 helmCharts:
   - name: argo-cd
     repo: https://argoproj.github.io/argo-helm
-    version: 6.0.6
+    version: 7.3.6
     releaseName: "argocd"
     namespace: argocd
     valuesFile: values.yaml

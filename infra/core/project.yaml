@@ -5,13 +5,10 @@ metadata:
   namespace: argocd
 spec:
   sourceRepos:
-    - 'https://gitlab.com/vehagn/mini-homelab.git'
+    - 'https://github.com/SaschaJohn/mini-homelab.git'
     - 'https://argoproj.github.io/argo-helm'
-    - 'https://helm.cilium.io/*'
   destinations:
     - namespace: 'argocd'
-      server: '*'
-    - namespace: 'cilium-secrets'
       server: '*'
     - namespace: 'kube-system'
       server: '*'
